@@ -1,0 +1,35 @@
+baseURL = "https://www.spindlelogs.com/"
+locale = "en-US"
+title = "Spindle"
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  description = "Mythic+ coaching from your combat log: not just what you did, but what you could have done."
+  appURL = "https://app.spindlelogs.com"
+  signInURL = "https://app.spindlelogs.com/login"
+  installURL = "https://app.spindlelogs.com/install"
+
+[menus]
+  [[menus.main]]
+    name = "Features"
+    pageRef = "/features"
+    weight = 10
+  [[menus.main]]
+    name = "How it works"
+    pageRef = "/how-it-works"
+    weight = 20
+  [[menus.main]]
+    name = "What Spindle reads"
+    pageRef = "/privacy"
+    weight = 30
+  [[menus.main]]
+    name = "FAQ"
+    pageRef = "/faq"
+    weight = 40
+
+[markup.goldmark.renderer]
+  unsafe = false
+
+[minify]
+  minifyOutput = true

@@ -1,0 +1,8 @@
+{{ define "main" }}
+<article class="wrap prose page">
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
+  {{ .Content }}
+  {{ if .Params.cta }}{{ partial "cta.html" . }}{{ end }}
+</article>
+{{ end }}

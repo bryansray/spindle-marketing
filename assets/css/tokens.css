@@ -1,0 +1,217 @@
+/* Copied from the analyzer repo's dashboard/src/tokens.css on 2026-10-13
+   (the "Ledger" tokens, docs/DESIGN.md). Keep in step with it by hand. */
+
+/*
+ * Spindle's design tokens: the "Ledger" direction (docs/DESIGN.md), chosen
+ * with the user on 2026-10-01. Dark is the default; `data-theme="light"` on
+ * <html> picks light, and `data-theme="system"` follows the system setting
+ * (src/lib/theme.ts sets it from the saved choice).
+ *
+ * The colour blocks match `[data-theme]` on any element, not just <html>,
+ * so a subtree can show another theme (the dev gallery shows both side by
+ * side). `[data-theme="system"]` takes the dark block too, so a system-dark
+ * subtree inside a light one is dark: custom properties inherit.
+ *
+ * Keep the two light blocks identical, and every text colour (the class
+ * colours too) at 4.5:1 or better on its surfaces: src/lib/tokens.test.ts
+ * checks both.
+ */
+
+:root {
+  /* Type: IBM Plex, bundled (the site's CSP allows only its own origin). */
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --text-xs: 0.6875rem; /* 11px: labels, axis ticks */
+  --text-sm: 0.8125rem; /* 13px: secondary text, table detail */
+  --text-base: 0.875rem; /* 14px: body, table rows */
+  --text-md: 1rem; /* 16px: card titles, emphasis */
+  --text-lg: 1.25rem; /* 20px: page title */
+  --text-xl: 1.5rem; /* 24px: rare, a headline number */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-strong: 600;
+  --leading-tight: 1.25;
+  --leading: 1.45;
+  --tracking-label: 0.06em;
+
+  /* Space: a 4px grid. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+
+  /* Shape. */
+  --radius-sm: 4px; /* bars, ticks, tags */
+  --radius: 6px; /* controls, chips */
+  --radius-lg: 8px; /* panels, cards */
+  --radius-full: 999px; /* pills, dots */
+  --border: 1px;
+
+  /* Density: glanceable between pulls, dense in the explorer. */
+  --row-height: 2.5rem; /* a table row with one line */
+  --row-height-dense: 2.125rem; /* the explorer's lanes and event list */
+  --target-min: 2.75rem; /* 44px: anything you click */
+
+  /* Motion: short and quiet; none when the system asks for less. */
+  --duration-fast: 120ms;
+  --duration: 180ms;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Colour: dark, the default (and the system setting, until it says light). */
+:root,
+[data-theme="dark"],
+[data-theme="system"] {
+  color-scheme: dark;
+  --color-bg: #0f1217;
+  --color-panel: #161a20;
+  --color-raised: #1c2129;
+  --color-line: #2a303a;
+  --color-line-strong: #3b4250;
+  /* The players' lane bands, alternating (docs/DESIGN.md, "Lane bands"). */
+  --color-band: #181c23;
+  --color-band-alt: #1f242c;
+  --color-text: #e6e9ee;
+  --color-muted: #a0a8b5;
+  --color-faint: #848d9b;
+  --color-accent: #7a9cf2;
+  --color-accent-text: #0b1430;
+  --color-accent-soft: #1c2640;
+  --color-good: #63c994;
+  --color-good-soft: #15291f;
+  --color-warn: #e9a93f;
+  --color-warn-soft: #2e2412;
+  --color-bad: #f27f5c;
+  --color-bad-soft: #36190f;
+  /* The explorer's waterfall. */
+  --color-enemy: #8a93a1;
+  --color-cast: #2e3847;
+  --color-debuff: #5a3125;
+  --color-hit: #a5705f;
+  --color-heal: #4f9a83;
+  /* Class colours, for character names only (docs/DESIGN.md, "Class
+     colours"): the game's, lightened where it was under 4.5:1. */
+  --class-death-knight: #e7637a;
+  --class-demon-hunter: #c16edc;
+  --class-druid: #ff7c0a;
+  --class-evoker: #38a08a;
+  --class-hunter: #aad372;
+  --class-mage: #3fc7eb;
+  --class-monk: #00ff98;
+  --class-paladin: #f48cba;
+  --class-priest: #ffffff;
+  --class-rogue: #fff468;
+  --class-shaman: #1e90ff;
+  --class-warlock: #8788ee;
+  --class-warrior: #c69b6d;
+  --shadow-1: none;
+  --shadow-2: 0 8px 24px rgb(0 0 0 / 0.45);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: #f5f6f8;
+  --color-panel: #ffffff;
+  --color-raised: #fafbfc;
+  --color-line: #e2e5ea;
+  --color-line-strong: #c8cdd5;
+  --color-band: #fcfcfd;
+  --color-band-alt: #f3f5f8;
+  --color-text: #14171c;
+  --color-muted: #566070;
+  --color-faint: #5f6876;
+  --color-accent: #2b57c9;
+  --color-accent-text: #ffffff;
+  --color-accent-soft: #e8eefb;
+  --color-good: #1f7a55;
+  --color-good-soft: #e3f2eb;
+  --color-warn: #8f5400;
+  --color-warn-soft: #fbefd9;
+  --color-bad: #b83a14;
+  --color-bad-soft: #fbe6de;
+  --color-enemy: #6b7483;
+  --color-cast: #c9d3e6;
+  --color-debuff: #f2c9b8;
+  --color-hit: #b5806f;
+  --color-heal: #5fa58f;
+  /* The same hues, darkened to 4.5:1 on light surfaces. */
+  --class-death-knight: #c41e3a;
+  --class-demon-hunter: #a130c7;
+  --class-druid: #a84e00;
+  --class-evoker: #287363;
+  --class-hunter: #517223;
+  --class-mage: #0e708a;
+  --class-monk: #007847;
+  --class-paladin: #ca1364;
+  --class-priest: #676767;
+  --class-rogue: #726a00;
+  --class-shaman: #0066c9;
+  --class-warlock: #5153e6;
+  --class-warrior: #886035;
+  --shadow-1: 0 1px 2px rgb(20 23 28 / 0.06);
+  --shadow-2: 0 8px 24px rgb(20 23 28 / 0.12);
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme="system"] {
+    color-scheme: light;
+    --color-bg: #f5f6f8;
+    --color-panel: #ffffff;
+    --color-raised: #fafbfc;
+    --color-line: #e2e5ea;
+    --color-line-strong: #c8cdd5;
+    --color-band: #fcfcfd;
+    --color-band-alt: #f3f5f8;
+    --color-text: #14171c;
+    --color-muted: #566070;
+    --color-faint: #5f6876;
+    --color-accent: #2b57c9;
+    --color-accent-text: #ffffff;
+    --color-accent-soft: #e8eefb;
+    --color-good: #1f7a55;
+    --color-good-soft: #e3f2eb;
+    --color-warn: #8f5400;
+    --color-warn-soft: #fbefd9;
+    --color-bad: #b83a14;
+    --color-bad-soft: #fbe6de;
+    --color-enemy: #6b7483;
+    --color-cast: #c9d3e6;
+    --color-debuff: #f2c9b8;
+    --color-hit: #b5806f;
+    --color-heal: #5fa58f;
+    --class-death-knight: #c41e3a;
+    --class-demon-hunter: #a130c7;
+    --class-druid: #a84e00;
+    --class-evoker: #287363;
+    --class-hunter: #517223;
+    --class-mage: #0e708a;
+    --class-monk: #007847;
+    --class-paladin: #ca1364;
+    --class-priest: #676767;
+    --class-rogue: #726a00;
+    --class-shaman: #0066c9;
+    --class-warlock: #5153e6;
+    --class-warrior: #886035;
+    --shadow-1: 0 1px 2px rgb(20 23 28 / 0.06);
+    --shadow-2: 0 8px 24px rgb(20 23 28 / 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration: 0ms;
+  }
+}
+
+/* A themed element (or the page) paints its own surface and text, so a
+   subtree in another theme doesn't inherit its parent's computed colours. */
+:root,
+[data-theme] {
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
