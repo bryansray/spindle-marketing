@@ -36,10 +36,5 @@ disableKinds = ["taxonomy", "term"]
 [markup.goldmark.renderer]
   unsafe = false
 
-# The Download page reads latest.json on every build (Hugo would otherwise
-# keep its first copy forever, and the page would never move on).
-[caches.getresource]
-  maxAge = 0
-
 [minify]
   minifyOutput = true

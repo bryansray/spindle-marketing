@@ -1,60 +1,23 @@
 {{- /*
-  The Download page (content/download.md). The release is read from the
-  downloads bucket's latest/latest.json when the site is built (never
-  cached: hugo.toml, [caches.getresource]), and the buttons go to that
-  release's own files under v<version>/, so the version, the file, and its
-  checksum on the page always agree. After a Spindle release, redeploy
-  (`just hosts` fails while the live page shows an older version).
-  A production build fails unless latest.json is read and names every
-  platform; `just dev` without it falls back to the stable latest/ names.
+  The Download page (content/download.md). The buttons go to the downloads
+  bucket's stable latest/ names, which each Spindle release replaces, and
+  the checksums are the bucket's latest/SHA256SUMS, replaced with them: the
+  page names no version, so it never needs rebuilding after a release.
 */ -}}
 {{ define "main" }}
 {{- $base := site.Params.downloadsURL }}
-{{- $release := dict }}
-{{- with try (resources.GetRemote (printf "%s/latest/latest.json" $base)) }}
-  {{- with .Err }}
-    {{- if hugo.IsProduction }}{{ errorf "download: couldn't read latest.json: %s" . }}{{ end }}
-  {{- else with .Value }}
-    {{- $release = . | transform.Unmarshal }}
-  {{- else }}
-    {{- if hugo.IsProduction }}{{ errorf "download: %s/latest/latest.json isn't there" $base }}{{ end }}
-  {{- end }}
-{{- end }}
-{{- if and hugo.IsProduction (or (ne $release.schema 1) (not $release.version)) }}
-  {{- errorf "download: latest.json has no version, or a schema other than 1" }}
-{{- end }}
-{{- /* Each platform: its file's address and name, and the manifest's entry. */}}
-{{- $downloads := slice }}
-{{- range .Params.platforms }}
-  {{- $entry := index ($release.platforms | default dict) .key }}
-  {{- $href := printf "%s/latest/%s" $base .file }}
-  {{- $name := .file }}
-  {{- with $entry }}
-    {{- /* `file` is relative to latest/: ../v0.10.0/Spindle-0.10.0-… */}}
-    {{- $href = printf "%s/%s" $base (strings.TrimPrefix "../" .file) }}
-    {{- $name = path.Base .file }}
-  {{- else }}
-    {{- if hugo.IsProduction }}{{ errorf "download: latest.json has no %s" .key }}{{ end }}
-  {{- end }}
-  {{- $downloads = $downloads | append (dict "os" .os "needs" .needs "href" $href "name" $name "entry" $entry) }}
-{{- end }}
-{{- $sums := printf "%s/latest/SHA256SUMS" $base }}
-{{- with $release.version }}{{ $sums = printf "%s/v%s/SHA256SUMS" $base . }}{{ end }}
 <article class="wrap page download">
   <div class="prose">
     <h1>{{ .Title }}</h1>
     <p class="lede">{{ .Description }}</p>
-    {{- with $release.version }}
-    <p class="mono muted download-version" data-version="{{ . }}">Version {{ . }} · {{ time.Format "2 January 2006" $release.date }}</p>
-    {{- end }}
   </div>
 
   <ul class="download-grid">
-    {{- range $downloads }}
+    {{- range .Params.platforms }}
     <li class="panel download-card">
       <h2>{{ .os }}</h2>
-      <a class="button" href="{{ .href }}">Download for {{ .os }}</a>
-      <p class="mono">{{ .name }}{{ with .entry }} <span class="nowrap">· {{ div .size 1048576.0 | lang.FormatNumber 1 }} MB</span>{{ end }}</p>
+      <a class="button" href="{{ $base }}/latest/{{ .file }}">Download for {{ .os }}</a>
+      <p class="mono">{{ .file }}</p>
       <p class="muted">{{ .needs }}</p>
     </li>
     {{- end }}
@@ -64,23 +27,12 @@
     {{ .Content }}
 
     <h2 id="checksums">Check your download (optional)</h2>
-    <p>Every release comes with <a href="{{ $sums }}">SHA256SUMS</a>, one line per installer. To check your file came from us unchanged, compare its SHA-256 with that line, or with the one below:</p>
+    <p>The latest release's <a href="{{ $base }}/latest/SHA256SUMS">SHA256SUMS</a> has one line per installer. To check your file came from us unchanged, compare its SHA-256 with that line:</p>
     <ul>
-      {{- range $downloads }}
-      <li>{{ .os }} ({{ if eq .os "Windows" }}PowerShell, in your Downloads folder{{ else }}Terminal{{ end }}): <code>{{ if eq .os "Windows" }}Get-FileHash .\{{ .name }}{{ else }}shasum -a 256 ~/Downloads/{{ .name }}{{ end }}</code>{{ if eq .os "Windows" }} (it prints the hash in capitals; compare ignoring case){{ end }}</li>
+      {{- range .Params.platforms }}
+      <li>{{ .os }} ({{ if eq .os "Windows" }}PowerShell, in your Downloads folder{{ else }}Terminal{{ end }}): <code>{{ if eq .os "Windows" }}Get-FileHash .\{{ .file }}{{ else }}shasum -a 256 ~/Downloads/{{ .file }}{{ end }}</code>{{ if eq .os "Windows" }} (it prints the hash in capitals; compare ignoring case){{ end }}</li>
       {{- end }}
     </ul>
-    {{- if $release.platforms }}
-    <dl class="download-sums">
-      {{- range $downloads }}
-      {{- $name := .name }}
-      {{- with .entry }}
-      <dt class="mono">{{ $name }}</dt>
-      <dd class="mono">{{ .sha256 }}</dd>
-      {{- end }}
-      {{- end }}
-    </dl>
-    {{- end }}
   </div>
 
   <div class="cta">

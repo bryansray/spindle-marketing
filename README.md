@@ -31,7 +31,7 @@ The app itself lives in the separate `analyzer` repository; its dashboard is at 
 
 ## The Download page
 
-`content/download.md` (the steps) with `layouts/_default/download.html`. Its buttons go to the downloads bucket's stable `latest/` names, so they are always the newest release. The version, date, sizes, and checksums are read from `latest/latest.json` when the site is built (a production build fails if it can't be read; `just dev` shows the page without them), so **run `just deploy` after each Spindle release**; `just hosts` fails while the live page shows an older version. The steps must match the analyzer repo's `docs/INSTALL.md` ("For players"); the app's `/install` forwards here.
+`content/download.md` (the steps) with `layouts/_default/download.html`. Its buttons go to the downloads bucket's stable `latest/` names, and its checksums link is `latest/SHA256SUMS`: each Spindle release replaces all three, so the page names no version and never needs a deploy after a release. The steps must match the analyzer repo's `docs/INSTALL.md` ("For players"); the app's `/install` forwards here.
 
 ## Screenshots
 
@@ -46,5 +46,6 @@ Taken from the analyzer repo's `just cloud-demo` (the demo user, Demo#1001, sign
 Cloudflare Workers static assets, like the app's dashboard (`td-54eac1`; the analyzer repo's `docs/DEPLOY.md`): the Worker `spindle-site`, configured in `wrangler.jsonc`, serves Hugo's `public/` as it is, with no script. Response headers (a CSP with no script at all, and long caching for the fingerprinted CSS and images) are in `static/_headers`.
 
 - `just deploy`: `just check`, then `wrangler deploy`. It refuses with uncommitted changes, so what's live is always a commit.
-- `just hosts`: checks the live site (www, a 404, the apex's redirect, the CSP).
+- **CI** (`.github/workflows/deploy.yml`): every push to `main`, and by hand (Actions › Deploy › Run workflow), runs the same `just deploy`, then `just hosts`. Its `Production` environment (deployment branches: `main` only) holds the secret `CLOUDFLARE_API_TOKEN`, a Cloudflare API token with Account `Workers Scripts: Edit` and Zone `Workers Routes: Edit` and `Zone: Read` on `spindlelogs.com`, and the variable `CLOUDFLARE_ACCOUNT_ID`.
+- `just hosts`: checks the live site (www, the Download page, a 404, the apex's redirect, the CSP).
 - `www.spindlelogs.com` and `spindlelogs.com` are the Worker's custom domains: `wrangler deploy` made their DNS records and certificates (shown read-only in the zone's DNS; detach the domain from the Worker to remove one). The apex is attached only for its record and certificate: a Redirect Rule in the `spindlelogs.com` zone (Rules › Redirect Rules) sends it to `https://www.spindlelogs.com` with the path and query, 301, before it reaches the Worker.

@@ -30,7 +30,7 @@ deploy: check
     command -v wrangler >/dev/null || { echo "wrangler not found: npm install -g wrangler" >&2; exit 1; }
     wrangler deploy
 
-# Check the live site: www and its headers, a 404, the apex redirect, the Download page on the latest version
+# Check the live site: www and its headers, a 404, the apex redirect, the Download page
 hosts:
     #!/usr/bin/env bash
     set -uo pipefail
@@ -41,14 +41,10 @@ hosts:
     }
     check "www" https://www.spindlelogs.com/ 200
     check "features" https://www.spindlelogs.com/features/ 200
+    check "download" https://www.spindlelogs.com/download/ 200
     check "missing page" https://www.spindlelogs.com/no-such-page/ 404
     check "apex redirects" https://spindlelogs.com/features/ 301
     loc="$(curl -sI -m 10 https://spindlelogs.com/features/?a=1 | tr -d '\r' | awk 'tolower($1)=="location:"{print $2}')"
     [ "$loc" = "https://www.spindlelogs.com/features/?a=1" ] && echo "ok   apex keeps path and query" || { echo "FAIL apex location: ${loc:-none}"; fail=1; }
     curl -sI -m 10 https://www.spindlelogs.com/ | grep -qi '^content-security-policy:' && echo "ok   CSP header" || { echo "FAIL no CSP header"; fail=1; }
-    # The Download page's version is read at build time: after a release,
-    # redeploy so it matches latest.json (its buttons are right either way).
-    latest="$(curl -s -m 10 https://downloads.spindlelogs.com/latest/latest.json | python3 -c 'import json,sys; print(json.load(sys.stdin)["version"])' 2>/dev/null)"
-    live="$(curl -s -m 10 https://www.spindlelogs.com/download/ | grep -o 'data-version="\{0,1\}[0-9][^ ">]*' | sed 's/.*=//; s/"//g')"
-    if [ -n "$latest" ] && [ "$live" = "$latest" ]; then echo "ok   download page shows $live"; else echo "FAIL download page shows ${live:-no version}, the latest is ${latest:-unknown}: just deploy"; fail=1; fi
     exit $fail
