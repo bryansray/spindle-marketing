@@ -1,0 +1,22 @@
+# Response headers on Cloudflare Workers static assets (wrangler.jsonc).
+# Only Cloudflare reads this file; `just dev` ignores it.
+# The site has no JavaScript and loads nothing from other hosts, so the CSP
+# allows no script at all and only this origin's styles, images, and fonts.
+# style-src's one hash is for favicon.svg's own <style> (its light and dark
+# colours): the /* rule sends this policy with the SVG's response too. It's
+# the app's favicon (the analyzer repo's dashboard/public/favicon.svg) with
+# the same hash; if the icon changes, hash its <style> contents again.
+/*
+  Content-Security-Policy: default-src 'none'; style-src 'self' 'sha256-3cqpNoxhNVYCaghcAeks6kIz9dgbRBOA5GlnV57aKnc='; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cross-Origin-Opener-Policy: same-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000
+
+# Hugo fingerprints these (a hash in each file name), so they never change.
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+/images/*
+  Cache-Control: public, max-age=31536000, immutable

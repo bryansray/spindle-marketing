@@ -38,4 +38,8 @@ Taken from the analyzer repo's `just cloud-demo` (the demo user, Demo#1001, sign
 
 ## Hosting
 
-Planned: Cloudflare (Pages, or Workers static assets like the dashboard) at `www.spindlelogs.com`, with the apex redirecting to it (`td-54eac1`). Build command `hugo --gc --minify`, output `public/`.
+Cloudflare Workers static assets, like the app's dashboard (`td-54eac1`; the analyzer repo's `docs/DEPLOY.md`): the Worker `spindle-site`, configured in `wrangler.jsonc`, serves Hugo's `public/` as it is, with no script. Response headers (a CSP with no script at all, and long caching for the fingerprinted CSS and images) are in `static/_headers`.
+
+- `just deploy`: `just check`, then `wrangler deploy`. It refuses with uncommitted changes, so what's live is always a commit.
+- `just hosts`: checks the live site (www, a 404, the apex's redirect, the CSP).
+- `www.spindlelogs.com` and `spindlelogs.com` are the Worker's custom domains: `wrangler deploy` made their DNS records and certificates (shown read-only in the zone's DNS; detach the domain from the Worker to remove one). The apex is attached only for its record and certificate: a Redirect Rule in the `spindlelogs.com` zone (Rules › Redirect Rules) sends it to `https://www.spindlelogs.com` with the path and query, 301, before it reaches the Worker.

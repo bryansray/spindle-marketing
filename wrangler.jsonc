@@ -1,0 +1,26 @@
+// The marketing site on Cloudflare Workers static assets, like the app's
+// dashboard (the analyzer repo's docs/DEPLOY.md). Assets only: no Worker
+// script runs, Cloudflare serves Hugo's build in public/ as it is.
+// Deploy with `just deploy`, which builds and checks the site first.
+{
+  "name": "spindle-site",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./public",
+    // Hugo writes pages as <path>/index.html and links to <path>/;
+    // /features redirects to /features/.
+    "html_handling": "auto-trailing-slash",
+    // Any other path gets Hugo's 404.html with status 404.
+    "not_found_handling": "404-page"
+  },
+  // Only the custom domains: no *.workers.dev or preview addresses.
+  "workers_dev": false,
+  "preview_urls": false,
+  // www is the site. The apex is attached only so it has a DNS record and a
+  // certificate; a Redirect Rule in the spindlelogs.com zone sends every
+  // request on it to www (path and query kept) before it reaches the Worker.
+  "routes": [
+    { "pattern": "www.spindlelogs.com", "custom_domain": true },
+    { "pattern": "spindlelogs.com", "custom_domain": true }
+  ]
+}
