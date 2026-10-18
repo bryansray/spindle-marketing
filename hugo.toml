@@ -8,7 +8,8 @@ disableKinds = ["taxonomy", "term"]
   description = "Mythic+ coaching from your combat log: not just what you did, but what you could have done."
   appURL = "https://app.spindlelogs.com"
   signInURL = "https://app.spindlelogs.com/login"
-  installURL = "https://app.spindlelogs.com/install"
+  installURL = "/download/"
+  downloadsURL = "https://downloads.spindlelogs.com"
 
 [menus]
   [[menus.main]]
@@ -27,9 +28,18 @@ disableKinds = ["taxonomy", "term"]
     name = "FAQ"
     pageRef = "/faq"
     weight = 40
+  [[menus.main]]
+    name = "Download"
+    pageRef = "/download"
+    weight = 50
 
 [markup.goldmark.renderer]
   unsafe = false
+
+# The Download page reads latest.json on every build (Hugo would otherwise
+# keep its first copy forever, and the page would never move on).
+[caches.getresource]
+  maxAge = 0
 
 [minify]
   minifyOutput = true

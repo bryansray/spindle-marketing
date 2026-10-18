@@ -14,12 +14,13 @@ The app itself lives in the separate `analyzer` repository; its dashboard is at 
 
 | Path | What |
 |---|---|
-| `hugo.toml` | Site config: URLs for the app, sign-in, and download (`[params]`), the menu |
+| `hugo.toml` | Site config: URLs for the app, sign-in, the Download page, and the downloads bucket (`[params]`), the menu |
 | `content/` | One Markdown file per page; the home page's hero screenshot, tour, and feature cards are in `_index.md`'s front matter |
 | `layouts/` | Templates (`_default/baseof.html` is the shell; `partials/` holds the header, footer, call-to-action, `shot.html`, and `mark.html`, the brand mark from the analyzer repo's `brand/spindle-mark.svg`, drawn in the accent like the app's header; `shortcodes/shot.html` puts a screenshot in a Markdown page) |
 | `assets/images/` | Screenshots of the app, full-size PNGs at 2x; Hugo serves them as WebP at 720, 1200, and 1800 wide, and crops `latest-key.png` into the social preview image |
 | `assets/css/tokens.css` | The app's "Ledger" design tokens, copied from the analyzer repo's `dashboard/src/tokens.css`; keep them in step by hand |
 | `assets/css/site.css` | This site's layout |
+| `assets/css/fonts.css`, `static/fonts/` | IBM Plex Sans (400, 500, 600) and Mono (400, 500), Latin and Latin Extended, copied from the analyzer repo's dashboard (`@fontsource` 5.3.0) and served from this site; licences in `static/fonts/OFL-IBM-Plex-Sans.txt` and `static/fonts/OFL-IBM-Plex-Mono.txt` |
 | `static/` | Files served as they are: the favicons, copied from the analyzer repo's `dashboard/public/` |
 
 ## Content rules
@@ -27,6 +28,10 @@ The app itself lives in the separate `analyzer` repository; its dashboard is at 
 - Claim only what has shipped. Upcoming work goes under "Coming next" on the Features page.
 - The "What Spindle reads" page must match the analyzer repo's `docs/TRAY.md` ("Game files") and the hard constraints in its `CLAUDE.md`.
 - No Blizzard art or logos; keep the "not affiliated" line in the footer.
+
+## The Download page
+
+`content/download.md` (the steps) with `layouts/_default/download.html`. Its buttons go to the downloads bucket's stable `latest/` names, so they are always the newest release. The version, date, sizes, and checksums are read from `latest/latest.json` when the site is built (a production build fails if it can't be read; `just dev` shows the page without them), so **run `just deploy` after each Spindle release**; `just hosts` fails while the live page shows an older version. The steps must match the analyzer repo's `docs/INSTALL.md` ("For players"); the app's `/install` forwards here.
 
 ## Screenshots
 

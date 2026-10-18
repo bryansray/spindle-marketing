@@ -20,5 +20,6 @@
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
 <meta name="color-scheme" content="dark light">
-{{- $css := slice (resources.Get "css/tokens.css") (resources.Get "css/site.css") | resources.Concat "css/site.css" | minify | fingerprint }}
+<link rel="preload" href="{{ "fonts/ibm-plex-sans-latin-400-normal.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+{{- $css := slice (resources.Get "css/fonts.css") (resources.Get "css/tokens.css") (resources.Get "css/site.css") | resources.Concat "css/site.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
