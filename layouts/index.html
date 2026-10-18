@@ -5,6 +5,11 @@
     <h1>{{ .Title }}</h1>
     <p class="lede">{{ .Params.lede }}</p>
     {{ partial "cta.html" . }}
+    {{- with .Params.hero }}
+    <div class="hero-shot">
+      {{ partial "shot.html" (dict "name" .image "alt" .alt "caption" .caption "eager" true) }}
+    </div>
+    {{- end }}
   </div>
 </section>
 
@@ -22,8 +27,21 @@
   </figure>
 </section>
 
+<section class="wrap showcase" aria-label="A tour of Spindle">
+  {{- range .Params.showcase }}
+  <article class="showcase-row">
+    <div class="showcase-text">
+      <p class="eyebrow">{{ .eyebrow }}</p>
+      <h2>{{ .title }}</h2>
+      <p>{{ .text }}</p>
+    </div>
+    {{ partial "shot.html" (dict "name" .image "alt" .alt "sizes" "(min-width: 60rem) 40rem, 100vw") }}
+  </article>
+  {{- end }}
+</section>
+
 <section class="wrap features" aria-labelledby="features-title">
-  <h2 id="features-title">Between every pull</h2>
+  <h2 id="features-title">What it checks, every pull</h2>
   <ul class="feature-grid">
     {{- range .Params.features }}
     <li class="panel">
@@ -36,5 +54,6 @@
 
 <section class="wrap prose">
   {{ .Content }}
+  {{ partial "cta.html" . }}
 </section>
 {{ end }}

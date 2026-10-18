@@ -1,0 +1,2 @@
+{{- /* {{< shot name="explorer" alt="..." caption="..." >}}: see partials/shot.html */ -}}
+{{ partial "shot.html" (dict "name" (.Get "name") "alt" (.Get "alt") "caption" (.Get "caption") "sizes" "(min-width: 44rem) 44rem, 100vw") }}

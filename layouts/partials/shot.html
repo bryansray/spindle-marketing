@@ -1,0 +1,29 @@
+{{- /*
+  A screenshot from assets/images/<name>.png, served as WebP at a few widths.
+  Takes a dict: name, alt, and optionally caption, sizes, eager (the first
+  image on a page, so it isn't lazy-loaded).
+*/ -}}
+{{- $img := resources.Get (printf "images/%s.png" .name) }}
+{{- if not $img }}{{ errorf "shot: no assets/images/%s.png" .name }}{{ end }}
+{{- if not .alt }}{{ errorf "shot %s: alt text is required" .name }}{{ end }}
+{{- if lt $img.Width 720 }}{{ errorf "shot %s: %d px wide; take it at 720 or wider" .name $img.Width }}{{ end }}
+{{- $sizes := .sizes | default "(min-width: 68rem) 64rem, 100vw" }}
+{{- $srcset := slice }}
+{{- $fallback := "" }}
+{{- range $w := slice 720 1200 1800 }}
+  {{- if le $w $img.Width }}
+    {{- $r := $img.Resize (printf "%dx webp q82" $w) }}
+    {{- $srcset = $srcset | append (printf "%s %dw" $r.RelPermalink $w) }}
+    {{- $fallback = $r }}
+  {{- end }}
+{{- end }}
+<figure class="shot">
+  <div class="shot-frame">
+    <img src="{{ $fallback.RelPermalink }}" srcset="{{ delimit $srcset ", " }}" sizes="{{ $sizes }}"
+      width="{{ $fallback.Width }}" height="{{ $fallback.Height }}" alt="{{ .alt }}"
+      {{ if .eager }}fetchpriority="high"{{ else }}loading="lazy" decoding="async"{{ end }}>
+  </div>
+  {{- with .caption }}
+  <figcaption>{{ . }}</figcaption>
+  {{- end }}
+</figure>
