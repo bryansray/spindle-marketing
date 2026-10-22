@@ -13,20 +13,6 @@
   </div>
 </section>
 
-<section class="wrap example" aria-label="Example">
-  <figure class="compare">
-    <div class="compare-col">
-      <p class="label">Other tools</p>
-      <p class="mono">Mage · 2 kicks</p>
-    </div>
-    <div class="compare-col compare-ours">
-      <p class="label">Spindle</p>
-      <p class="mono">Mage · 2 of 11 <span class="muted">kicks taken with the interrupt ready</span></p>
-    </div>
-    <figcaption class="muted">Counts tell you what happened. Spindle tells you what could have.</figcaption>
-  </figure>
-</section>
-
 <section class="wrap showcase" aria-label="A tour of Spindle">
   {{- range .Params.showcase }}
   <article class="showcase-row">
@@ -38,6 +24,25 @@
     {{ partial "shot.html" (dict "name" .image "alt" .alt "sizes" "(min-width: 60rem) 40rem, 100vw") }}
   </article>
   {{- end }}
+</section>
+
+<section class="wrap prose">
+  {{ .Content }}
+</section>
+
+<section class="wrap example" aria-labelledby="apart-title">
+  <h2 id="apart-title">What sets it apart: judgment over counts</h2>
+  <figure class="compare">
+    <div class="compare-col">
+      <p class="label">Other tools</p>
+      <p class="mono">Mage · 2 kicks</p>
+    </div>
+    <div class="compare-col compare-ours">
+      <p class="label">Spindle</p>
+      <p class="mono">Mage · 2 of 11 <span class="muted">kicks taken with the interrupt ready</span></p>
+    </div>
+    <figcaption class="muted">Counts tell you what happened. Spindle tells you what could have.</figcaption>
+  </figure>
 </section>
 
 <section class="wrap features" aria-labelledby="features-title">
@@ -52,8 +57,7 @@
   </ul>
 </section>
 
-<section class="wrap prose">
-  {{ .Content }}
+<section class="wrap cta-end" aria-label="Get started">
   {{ partial "cta.html" . }}
 </section>
 {{ end }}

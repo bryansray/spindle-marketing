@@ -5,7 +5,7 @@ enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 
 [params]
-  description = "Mythic+ coaching from your combat log: not just what you did, but what you could have done."
+  description = "Your World of Warcraft combat logs, characters, and guild in one place: fast to explore, and it tells you what mattered."
   appURL = "https://app.spindlelogs.com"
   signInURL = "https://app.spindlelogs.com/login"
   installURL = "/download/"

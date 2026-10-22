@@ -1,12 +1,22 @@
 ---
-title: "See what you could have done, not just what you did."
-eyebrow: "Mythic+ coaching for World of Warcraft"
-lede: "Spindle reads your combat log as you play and, between pulls, shows you and your group what went wrong, and whether it could have been prevented."
+title: "Your logs, your characters, your guild, in one place."
+eyebrow: "Combat logs, characters, and guilds for World of Warcraft"
+lede: "Spindle uploads your combat log as you play: explore the key while it's still running, keep a record of every character, and follow your guild's progress. And it tells you what mattered: what went wrong, and whether it could have been prevented."
 hero:
-  image: "latest-key"
-  alt: "Spindle's home page after a Temple of Sethraliss +5: the key timed with 5:20 left, two must-kicks missed, defensives fine, and you had no deaths; a Worth a look list explains each missed kick and a groupmate's death with defensives still ready."
-  caption: "Your latest key: what went wrong, why it counts, and a link to the moment it happened."
+  image: "explorer"
+  alt: "The log explorer on pull 20 of a Temple of Sethraliss +5: a map of all 33 pulls, a waterfall of the boss's health, buffs, and damage, and a death recap showing Die by the Sword and Spell Reflection ready and unused."
+  caption: "Every key, stored and ready to explore: step through its pulls, filter the events, and open the moment behind any finding."
 showcase:
+  - eyebrow: "The numbers, judged"
+    title: "Tables for every pull and the whole key"
+    text: "Damage done and taken, healing, casts, interrupts, deaths, buffs, and debuffs, by player and ability, for one pull or the whole key. Beside the damage, how many times each player used their major cooldowns out of the times they could have."
+    image: "tables"
+    alt: "The explorer's Tables view for a boss pull: damage done by the group over time, then a table by player with amount, share, DPS, and major cooldowns used, such as Metamorphosis 11 of 12 and Avatar 0 of 29."
+  - eyebrow: "Your characters"
+    title: "Your characters, key by key"
+    text: "Your item level key by key, each slot as Spindle last saw it, and enchant and gem changes. With the optional Spindle addon, your bags, banks, Great Vault, and currencies too."
+    image: "gear"
+    alt: "A character's Gear tab: equipped item level 304.8, up 31.4 since 24 September, charted over their keys and other encounters."
   - eyebrow: "Between pulls"
     title: "Your own view, one glance long"
     text: "A few seconds after a pull ends, its results are in: the must-kicks you took out of the chances you had, cooldowns you held, deaths, and avoidable damage. Keep it on a second screen; nothing shows in the game."
@@ -18,25 +28,15 @@ showcase:
     image: "group-board"
     alt: "The group board for a five-player key: each player's spec, missed must-kicks, defensives, held cooldowns, and deaths, then pull 24's missed kicks listed by player and enemy cast."
   - eyebrow: "After the key"
-    title: "See exactly what happened"
-    text: "Every key is stored. Step through its pulls, filter the events, and open any finding to see the moment behind it: a death's last seconds, the hits that caused it, and the defensives that were still ready."
-    image: "explorer"
-    alt: "The log explorer on pull 20 of a Temple of Sethraliss +5: a map of all 33 pulls, a waterfall of the boss's health, buffs, and damage, and a death recap showing Die by the Sword and Spell Reflection ready and unused."
-  - eyebrow: "The numbers, judged"
-    title: "Tables for every pull and the whole key"
-    text: "Damage done and taken, healing, casts, interrupts, deaths, buffs, and debuffs, by player and ability, for one pull or the whole key. Beside the damage, how many times each player used their major cooldowns out of the times they could have."
-    image: "tables"
-    alt: "The explorer's Tables view for a boss pull: damage done by the group over time, then a table by player with amount, share, DPS, and major cooldowns used, such as Metamorphosis 11 of 12 and Avatar 0 of 29."
+    title: "What went wrong, and why it counts"
+    text: "Your latest key on your home page: whether you timed it, the must-kicks missed with an interrupt ready, defensives, deaths, and a short list of what's worth a look, each with a link to the moment it happened."
+    image: "latest-key"
+    alt: "Spindle's home page after a Temple of Sethraliss +5: the key timed with 5:20 left, two must-kicks missed, defensives fine, and you had no deaths; a Worth a look list explains each missed kick and a groupmate's death with defensives still ready."
   - eyebrow: "Over time"
     title: "Are you getting better?"
     text: "A private score for every key, from 0 to 100, measured against your own earlier keys and never anyone else's. It shows what cost you the most points lately and what to try next. Only you see it."
     image: "key-score"
     alt: "The Key score tab: the latest key scored 81 of 100, 17 above the player's average, on a trend rising since late September."
-  - eyebrow: "Your character"
-    title: "Gear, from your own keys"
-    text: "Your item level key by key, each slot as Spindle last saw it, and enchant and gem changes. With the optional Spindle addon, your bags, banks, Great Vault, and currencies too."
-    image: "gear"
-    alt: "A character's Gear tab: equipped item level 304.8, up 31.4 since 24 September, charted over their keys and other encounters."
 features:
   - title: "Kicks, against chances"
     text: "Every must-kick cast that went off while a player's interrupt was ready. Stuns, silences, and knockbacks that stop a cast count too, and so do pet interrupts."
@@ -52,12 +52,14 @@ features:
     text: "Hits from mechanics that could have been dodged, by player and by mechanic."
   - title: "Gear checks"
     text: "Missing enchants, empty sockets, and low-rank gems, seen in your own logs."
-  - title: "A log explorer"
-    text: "Every key, stored: a timeline of the pulls, filters, and each finding on the events behind it."
 ---
 
-## Built for the space between pulls
+## Your guild, too
 
-Keep Spindle open on a second screen. When a pull ends, glance at your own view, or, as the key leader, at all five players. Nothing shows in the game, and nothing runs during combat.
+Spindle follows your guild: its raid progress boss by boss, from Blizzard and from members' logs, with the best pull on the boss you're working on; the roster, with item level, Mythic+ rating, and who raids or runs keys; item level growth week by week; and the season's guild runs. Members also see each other's keystones this week, from those who use the Spindle addon and share them.
+
+## Fast, and nothing in the game
+
+A pull's results are in a few seconds after it ends, and a stored key opens straight away. Keep Spindle open on a second screen: nothing shows in the game, and the addon does nothing in combat.
 
 <!-- Draft copy: check every claim against what has shipped before launch. -->

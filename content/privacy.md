@@ -10,7 +10,7 @@ description: "Exactly what the Spindle app reads on your PC, and what it never t
 | Your combat log (`WoWCombatLog*.txt`) and archived copies of it | The analysis |
 | The game build and the advanced-logging setting | To tell you if logging is set up right |
 | Whether the Spindle addon (and other logging addons) are installed and enabled | The same |
-| The Spindle addon's own saved data, if you choose to share character data | Your gear, vault, and keystone on your character page |
+| The Spindle addon's own saved data, if you choose to share character data | Your gear, vault, and keystone on your character page; your keystone this week to your guild's members too, unless you turn that off in Settings |
 
 ## What it never does
 
